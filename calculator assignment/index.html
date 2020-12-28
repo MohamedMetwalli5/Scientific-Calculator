@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Scientific Calculator</title>
+    <!-- Import Styles -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1 class="big-title">{{ header }}</h1>
+
+        <div>
+            <h1 class="screen">{{ display }}</h1>
+        </div>
+        <div class="calculator-body">
+            <div class="calculator-keys">
+                <button type="" class="num" @click="percent">%</button>
+                <button type="button" class="all-clear" @click="this.display = ''">CE</button>
+                <button type="button" class="all-clear" value="" @click="this.display = ''">C</button>
+                <button type="button" class="delete" @click="deleteOneChar"></button>
+                <button type="button" @click="inverse">1/x</button>
+                <button type="button" @click="square">x<sup>2</sup></button>
+                <button type="button" @click="squareroot">&radic;</button>
+                <button type="button" @click="divide">&divide;</button>
+                <button type="button" @click="this.display += '7'">7</button>
+                <button type="button" @click="this.display += '8'">8</button>
+                <button type="button" @click="this.display += '9'">9</button>
+                <button type="button" @click="multiply">*</button>
+                <button type="button" @click="this.display += '4'">4</button>
+                <button type="button" @click="this.display += '5'">5</button>
+                <button type="button" @click="this.display += '6'">6</button>
+                <button type="button" @click="subtract">&minus;</button>
+                <button type="button" @click="this.display += '1'">1</button>
+                <button type="button" @click="this.display += '2'">2</button>
+                <button type="button" @click="this.display += '3'">3</button>
+                <button type="button" @click="add">&plus;</button>
+                <button type="button" @click="signinverter">+/-</button>
+                <button type="button" @click="this.display += '0'">0</button>
+                <button type="button" @click="this.display += '.'">.</button>
+                <button type="button" class="equal-sign" @click="equal">=</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import App -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="vue.js"></script>
+    <script>
+        const mountedApp = app.mount('#app')
+    </script>
+
+</body>
+
+</html>
