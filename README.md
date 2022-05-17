@@ -5,5 +5,5 @@ A web based calculator using HTML and CSS, JavaScript, and Spring Boot.
 
 <br>
 
-_Note: The server runs on port 8082
+Note: The server runs on port 8082
 
