@@ -39,8 +39,8 @@
 <script>
 export default {
   name: 'Home',
-  props: {
-    msg: String
+  data: {
+    display: ''
   },
     methods: {     
         inverse: function () {
