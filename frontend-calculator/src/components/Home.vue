@@ -8,44 +8,60 @@
         <div class="calculator-body">
             <div class="calculator-keys">
                 <button type="" class="num" @click="percent">%</button>
-                <button type="button" class="all-clear" @click="this.display = ''">CE</button>
-                <button type="button" class="all-clear" value="" @click="this.display = ''">C</button>
-                <button type="button" class="delete" @click="deleteOneChar"></button>
-                <button type="button" @click="inverse">1/x</button>
-                <button type="button" @click="square">x<sup>2</sup></button>
-                <button type="button" @click="squareroot">&radic;</button>
-                <button type="button" @click="divide">&divide;</button>
-                <button type="button" @click="this.display += '7'">7</button>
-                <button type="button" @click="this.display += '8'">8</button>
-                <button type="button" @click="this.display += '9'">9</button>
-                <button type="button" @click="multiply">*</button>
-                <button type="button" @click="this.display += '4'">4</button>
-                <button type="button" @click="this.display += '5'">5</button>
-                <button type="button" @click="this.display += '6'">6</button>
-                <button type="button" @click="subtract">&minus;</button>
-                <button type="button" @click="this.display += '1'">1</button>
-                <button type="button" @click="this.display += '2'">2</button>
-                <button type="button" @click="this.display += '3'">3</button>
-                <button type="button" @click="add">&plus;</button>
-                <button type="button" @click="signinverter">+/-</button>
-                <button type="button" @click="this.display += '0'">0</button>
-                <button type="button" @click="this.display += '.'">.</button>
-                <button type="button" class="equal-sign" @click="equal">=</button>
+                <button type="button" class="all-clear" @click="UpdateDisplay('')">CE</button>
+                <button type="button" class="all-clear" value="" @click="UpdateDisplay('')">C</button>
+                <button type="button" class="delete" @click="deleteOneChar()"></button>
+                <button type="button" @click="inverse()">1/x</button>
+                <button type="button" @click="square()">x<sup>2</sup></button>
+                <button type="button" @click="squareroot()">&radic;</button>
+                <button type="button" @click="divide()">&divide;</button>
+                <button type="button" @click="UpdateDisplay('7')">7</button>
+                <button type="button" @click="UpdateDisplay('8')">8</button>
+                <button type="button" @click="UpdateDisplay('9')">9</button>
+                <button type="button" @click="multiply()">*</button>
+                <button type="button" @click="UpdateDisplay('4')">4</button>
+                <button type="button" @click="UpdateDisplay('5')">5</button>
+                <button type="button" @click="UpdateDisplay('6')">6</button>
+                <button type="button" @click="subtract()">&minus;</button>
+                <button type="button" @click="UpdateDisplay('1')">1</button>
+                <button type="button" @click="UpdateDisplay('2')">2</button>
+                <button type="button" @click="UpdateDisplay('3')">3</button>
+                <button type="button" @click="add()">&plus;</button>
+                <button type="button" @click="signinverter()">+/-</button>
+                <button type="button" @click="UpdateDisplay('0')">0</button>
+                <button type="button" @click="UpdateDisplay('.')">.</button>
+                <button type="button" class="equal-sign" @click="equal()">=</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Home',
-  data: {
-    display: ''
+  data: function(){
+      return {
+        display: "",
+        operator: "",
+      };
   },
     methods: {     
-        inverse: function () {
+       
+       // Note : The port number of the Backend is 8082
+
+       UpdateDisplay: function(NewValue){
+            if(NewValue === ''){
+                this.display = "";
+            }else{
+                this.display += NewValue;
+            }
+       },
+
+
+       inverse: function () {
             axios
-                .get("http://localhost:8080/inverse", {
+                .get("http://localhost:8082/inverse", {
                     params: {
                         data: Number(this.display),
                     },
@@ -53,11 +69,12 @@ export default {
                 .then((response) => {
                     if (response.data == "Can't divide over zero") {
                         this.x = 0
-                        this.display = ""
+                        this.UpdateDisplay('');
                         this.y = 0
                         alert("Can't divide by zero");
                     } else {
-                        this.display = response.data.toString();
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
                     }
                 })
                 .catch(error => {
@@ -68,13 +85,14 @@ export default {
 
         signinverter: function () {
             axios
-                .get("http://localhost:8080/signinverter", {
+                .get("http://localhost:8082/signinverter", {
                     params: {
                         data: Number(this.display),
                     },
                 })
                 .then((response) => {
-                    this.display = response.data.toString();
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
                 })
                 .catch(error => {
                     console.log(error);
@@ -84,7 +102,7 @@ export default {
 
         squareroot: function () {
             axios
-                .get("http://localhost:8080/squareroot", {
+                .get("http://localhost:8082/squareroot", {
                     params: {
                         data: Number(this.display),
                     },
@@ -92,11 +110,12 @@ export default {
                 .then((response) => {
                     if (response.data == "Can't have square root of negative") {
                         this.x = 0
-                        this.display = ""
+                        this.UpdateDisplay('');
                         this.y = 0
                         alert("Can't have a square root of a negative number")
                     } else {
-                        this.display = response.data.toString();
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
                     }
                 })
                 .catch(error => {
@@ -107,13 +126,14 @@ export default {
 
         square: function () {
             axios
-                .get("http://localhost:8080/square", {
+                .get("http://localhost:8082/square", {
                     params: {
                         data: Number(this.display),
                     },
                 })
                 .then((response) => {
-                    this.display = response.data.toString();
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
                 })
                 .catch(error => {
                     console.log(error);
@@ -123,13 +143,14 @@ export default {
 
         percent: function () {
             axios
-                .get("http://localhost:8080/percent", {
+                .get("http://localhost:8082/percent", {
                     params: {
                         data: Number(this.display),
                     },
                 })
                 .then((response) => {
-                    this.display = response.data.toString();
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
                 })
                 .catch(error => {
                     console.log(error);
@@ -143,7 +164,7 @@ export default {
             }
             this.x = this.display
             this.operator = "+"
-            this.display = ""
+            this.UpdateDisplay('');
         },
 
 
@@ -154,10 +175,11 @@ export default {
             this.x = this.display
             this.operator = "-"
             if (this.display.length == 0) {
-                this.display = "-";
+                this.UpdateDisplay("");
+                this.UpdateDisplay("-");
                 this.x = this.display 
             } else {
-                this.display = "";
+                 this.UpdateDisplay('');
             }
         },
 
@@ -168,7 +190,7 @@ export default {
             }
             this.x = this.display
             this.operator = "*"
-            this.display = ""
+            this.UpdateDisplay('');
         },
 
 
@@ -178,7 +200,7 @@ export default {
             }
             this.x = this.display
             this.operator = "/"
-            this.display = ""
+            this.UpdateDisplay('');
         },
 
 
@@ -186,14 +208,15 @@ export default {
 
             if (this.operator == "+") {
                 axios
-                    .get("http://localhost:8080/add", {
+                    .get("http://localhost:8082/add", {
                         params: {
                             x: Number(this.x),
                             y: Number(this.display)
                         },
                     })
                     .then((response) => {
-                        this.display = response.data.toString();
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
                     })
                     .catch(error => {
                         console.log(error);
@@ -201,14 +224,15 @@ export default {
 
             } else if (this.operator == "-") {
                 axios
-                    .get("http://localhost:8080/subtract", {
+                    .get("http://localhost:8082/subtract", {
                         params: {
                             x: Number(this.x),
                             y: Number(this.display)
                         },
                     })
                     .then((response) => {
-                        this.display = response.data.toString();
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
                     })
                     .catch(error => {
                         console.log(error);
@@ -217,7 +241,7 @@ export default {
 
             } else if (this.operator == "/") {
                 axios
-                    .get("http://localhost:8080/divide", {
+                    .get("http://localhost:8082/divide", {
                         params: {
                             x: Number(this.x),
                             y: Number(this.display)
@@ -226,11 +250,12 @@ export default {
                     .then((response) => {
                         if (response.data == "Can't divide over zero") {
                             this.x = 0
-                            this.display = ""
+                            this.UpdateDisplay('');
                             this.y = 0
                             alert("Can't divide by zero")
                         } else {
-                            this.display = response.data.toString();
+                            this.UpdateDisplay("");
+                            this.UpdateDisplay(response.data.toString());
                         }
                     })
                     .catch(error => {
@@ -240,14 +265,15 @@ export default {
 
             } else if (this.operator == "*") {
                 axios
-                    .get("http://localhost:8080/multiply", {
+                    .get("http://localhost:8082/multiply", {
                         params: {
                             x: Number(this.x),
                             y: Number(this.display)
                         },
                     })
                     .then((response) => {
-                        this.display = response.data.toString();
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
                     })
                     .catch(error => {
                         console.log(error);
@@ -259,7 +285,8 @@ export default {
 
 
         deleteOneChar: function () {
-            this.display = this.display.substring(0, this.display.length - 1);
+            this.UpdateDisplay("");
+            this.UpdateDisplay(this.display.substring(0, this.display.length - 1));
         }
 
     }
@@ -371,6 +398,9 @@ button:hover {
   width: 420px;
   top: 22%;
   left: 50%;
+  padding: 0 10px;
+  font-size: 35px;
+
   position: absolute;
   transform: translate(-50%, -50%);
   text-align: right;

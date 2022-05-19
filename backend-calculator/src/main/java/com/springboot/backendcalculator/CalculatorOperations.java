@@ -64,5 +64,4 @@ public class CalculatorOperations {
 		return (data/100)+"";
 	}
 	
-	
 }
