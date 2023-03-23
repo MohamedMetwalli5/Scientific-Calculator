@@ -1,38 +1,50 @@
 <template>
     <div id="Home-class">
-        <h1 class="big-title">{{ header }}</h1>
-
-        <div>
-            <h1 id="screen">{{ display }}</h1>
+        <h1 id="page-title">{{ pageTitle }}</h1>
+        <div id="screen">
+            <h1>{{ display }}</h1>
         </div>
-        <div class="calculator-body">
+        <div id="calculator-body">
             <div class="calculator-keys">
-                <button type="" class="num" @click="percent">%</button>
-                <button type="button" class="all-clear" @click="UpdateDisplay('')">CE</button>
-                <button type="button" class="all-clear" value="" @click="UpdateDisplay('')">C</button>
-                <button type="button" class="delete" @click="deleteOneChar()"></button>
-                <button type="button" @click="inverse()">1/x</button>
-                <button type="button" @click="square()">x<sup>2</sup></button>
-                <button type="button" @click="squareroot()">&radic;</button>
-                <button type="button" @click="divide()">&divide;</button>
+                <button type="button" class="scientific-function" @click="sin()">sin</button>
+                <button type="button" class="scientific-function" @click="cos()">cos</button>
+                <button type="button" class="scientific-function" @click="tan()">tan</button>
                 <button type="button" @click="UpdateDisplay('7')">7</button>
                 <button type="button" @click="UpdateDisplay('8')">8</button>
                 <button type="button" @click="UpdateDisplay('9')">9</button>
-                <button type="button" @click="multiply()">*</button>
+                <button type="button" class="all-clear" @click="UpdateDisplay('')">CE</button>
+                <button type="button" class="all-clear" value="" @click="UpdateDisplay('')">C</button>
+                <button type="button" id="delete" @click="deleteOneChar()"></button>
+                <button type="button" class="scientific-function" @click="sinInverse()" data-superscript="-1">sin</button>
+                <button type="button" class="scientific-function" @click="cosInverse()" data-superscript="-1">cos</button>
+                <button type="button" class="scientific-function" @click="tanInverse()" data-superscript="-1">tan</button>
                 <button type="button" @click="UpdateDisplay('4')">4</button>
                 <button type="button" @click="UpdateDisplay('5')">5</button>
                 <button type="button" @click="UpdateDisplay('6')">6</button>
-                <button type="button" @click="subtract()">&minus;</button>
+                <button type="" class="scientific-operation" @click="percent">%</button>
+                <button type="button" class="scientific-operation" @click="add()">&plus;</button>
+                <button type="button" class="scientific-operation" @click="subtract()">&minus;</button>
+                <button type="button" class="scientific-function" @click="exponent()" data-superscript="y">X</button>
+                
+                <button type="button" class="scientific-function" @click="inverse()">1/x</button>
+                <button type="button" class="scientific-function" @click="square()" data-superscript="2">X</button>
                 <button type="button" @click="UpdateDisplay('1')">1</button>
                 <button type="button" @click="UpdateDisplay('2')">2</button>
                 <button type="button" @click="UpdateDisplay('3')">3</button>
-                <button type="button" @click="add()">&plus;</button>
-                <button type="button" @click="signinverter()">+/-</button>
+                <button type="button" class="scientific-operation" @click="multiply()">*</button>
+                <button type="button" class="scientific-operation" @click="divide()">&divide;</button>
+                <button type="button" class="scientific-operation" @click="squareroot()">&radic;</button>
+                <button type="button" class="scientific-function" @click="ln()">ln</button>
+                <button type="button" class="scientific-function" @click="nPr()">nPr</button>
+                <button type="button" class="scientific-function" @click="nCr()">nCr</button>
                 <button type="button" @click="UpdateDisplay('0')">0</button>
                 <button type="button" @click="UpdateDisplay('.')">.</button>
-                <button type="button" class="equal-sign" @click="equal()">=</button>
-            </div>
+                <button type="button" @click="signinverter()">+/-</button>
+                <button type="button" class="scientific-operation" @click="abs()">abs</button>
+                <button type="button" class="scientific-operation" @click="pi()">π</button>
+                <button type="button" id="equal-sign" @click="equal()">=</button>
         </div>
+    </div>
     </div>
 </template>
 
@@ -44,6 +56,7 @@ export default {
       return {
         display: "",
         operator: "",
+        pageTitle: "Scientific Calculator",
       };
   },
     methods: {     
@@ -58,6 +71,160 @@ export default {
             }
        },
 
+       sin: function () {
+            axios
+                .get("http://localhost:8082/sin", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        cos: function () {
+            axios
+                .get("http://localhost:8082/cos", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        tan: function () {
+            axios
+                .get("http://localhost:8082/tan", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        sinInverse: function () {
+            axios
+                .get("http://localhost:8082/sininverse", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        cosInverse: function () {
+            axios
+                .get("http://localhost:8082/cosinverse", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        tanInverse: function () {
+            axios
+                .get("http://localhost:8082/taninverse", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        ln: function () {
+            axios
+                .get("http://localhost:8082/ln", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        abs: function () {
+            axios
+                .get("http://localhost:8082/abs", {
+                    params: {
+                        data: Number(this.display),
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        
+        exponent: function () {
+            if (this.operator.length == 1 && this.display[0] != "-" && this.display[0] != "+") {
+                return;
+            }
+            this.x = this.display
+            this.operator = "x"
+            this.UpdateDisplay('');
+        },
+
+        nPr: function () {
+            if (this.operator.length == 1 && this.display[0] != "-" && this.display[0] != "+") {
+                return;
+            }
+            this.x = this.display
+            this.operator = "p"
+            this.UpdateDisplay('');
+        },
+
+        nCr: function () {
+            if (this.operator.length == 1 && this.display[0] != "-" && this.display[0] != "+") {
+                return;
+            }
+            this.x = this.display
+            this.operator = "c"
+            this.UpdateDisplay('');
+        },
 
        inverse: function () {
             axios
@@ -203,6 +370,20 @@ export default {
             this.UpdateDisplay('');
         },
 
+        pi: function () {
+            axios
+                .get("http://localhost:8082/pi", {
+                    params: {
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
 
         equal: function () {
 
@@ -278,7 +459,54 @@ export default {
                     .catch(error => {
                         console.log(error);
                     });
+            } else if (this.operator == "x") {
+                console.log("fffffff");
+                axios
+                    .get("http://localhost:8082/exponent", {
+                        params: {
+                            x: Number(this.x),
+                            y: Number(this.display)
+                        },
+                    })
+                    .then((response) => {
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            } else if (this.operator == "p") {
+                axios
+                    .get("http://localhost:8082/npr", {
+                        params: {
+                            x: Number(this.x),
+                            y: Number(this.display)
+                        },
+                    })
+                    .then((response) => {
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            } else if (this.operator == "c") {
+                axios
+                    .get("http://localhost:8082/ncr", {
+                        params: {
+                            x: Number(this.x),
+                            y: Number(this.display)
+                        },
+                    })
+                    .then((response) => {
+                        this.UpdateDisplay("");
+                        this.UpdateDisplay(response.data.toString());
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
+            
             this.operator = ""
             //alert("equal");
         },
@@ -308,7 +536,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 #Home-class{  
-  height: 94vh;
+  height: 100vh;
   background-image: linear-gradient(100deg, #feff24, #d87771);
   margin: 0;
 }
@@ -320,37 +548,55 @@ body {
   margin: 0;
 }
 
-.calculator-body {
+#screen {
+  color: white;
+  background-color: black;
+  border-radius: 10px;
+  height: 60px; 
+  width: 520px;
+  top: 22%;
+  left: 50%;
+  padding: 0 10px;
+  font-size: 35px;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  text-align: right;
+}
+
+#calculator-body {
   border: 1px solid rgb(69, 156, 238);
   background: cyan;
   background-image: linear-gradient(100deg, cyan, #d3e4c3);
   border-radius: 20px;
-  top: 60%;
+  top: calc(60% + 20px);
   left: 50%;
-  position: absolute;
+  position: fixed;
   transform: translate(-50%, -50%);
-  width: 420px;
+  width: 980px;
 }
-.big-title {
+#page-title {
   margin: auto;
-  margin-top: 20px;
-  margin-bottom: 50px;
-  margin-left: center;
-  margin-right: center;
-  color: #2d8a02;
+  margin-bottom: 10px;
+  color: #ffffff;
   font-size: 40px;
+  border:solid;
+  border-radius: 20px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-top: #feff24;
+  padding: 10px;
+  background-color: #32c25e;
 }
 
 .calculator-keys {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
 }
 
 button {
   height: 60px;
-  background-color: #fff;
   border-radius: 15px;
   border: 2px solid #66d2e0;
   background-color: transparent;
@@ -360,6 +606,12 @@ button {
 
 button:hover {
   background-color: #71cef3;
+  cursor: pointer;
+}
+
+button::after {
+    content: attr(data-superscript);
+    vertical-align: super;
 }
 
 .operator {
@@ -367,42 +619,37 @@ button:hover {
 }
 
 .all-clear {
-  background-color: #ff1a22;
-  border-color: #ff1a22;
+  background-color: rgb(245, 70, 70);
   color: rgb(0, 0, 0);
 }
 
 .all-clear:hover {
-  background-color: #f17377;
+  background-color: #9f131c;
 }
 
-.equal-sign {
-  background-color: #4297cf;
+.scientific-function {
+  background-color: #FF7F3F;
 }
-.equal-sign:hover {
-  background-color: #74aed4;
+.scientific-function:hover {
+  background-color: #3689c0;
 }
 
-.delete {
+.scientific-operation{
+  background-color: #F94892;
+}
+
+#equal-sign {
+  background-color: #119cf9;
+}
+#equal-sign:hover {
+  background-color: #3689c0;
+}
+
+#delete {
   background-image: url("../assets/delete.png");
   background-size: cover;
   background-color: #4cd6bf;
   background-position: center;
 }
-#screen {
-  color: white;
-  background-color: black;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  height: 50px; 
-  width: 420px;
-  top: 22%;
-  left: 50%;
-  padding: 0 10px;
-  font-size: 35px;
 
-  position: absolute;
-  transform: translate(-50%, -50%);
-  text-align: right;
-}
 </style>
