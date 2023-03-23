@@ -12,9 +12,9 @@
                 <button type="button" @click="UpdateDisplay('7')">7</button>
                 <button type="button" @click="UpdateDisplay('8')">8</button>
                 <button type="button" @click="UpdateDisplay('9')">9</button>
-                <button type="button" class="all-clear" @click="UpdateDisplay('')">CE</button>
-                <button type="button" class="all-clear" value="" @click="UpdateDisplay('')">C</button>
-                <button type="button" id="delete" @click="deleteOneChar()"></button>
+                <button type="button" class="scientific-operation" @click="abs()">abs</button>
+                <button type="button" class="scientific-operation" @click="pi()">π</button>
+                <button type="button" class="scientific-operation" @click="e('')">e</button>        
                 <button type="button" class="scientific-function" @click="sinInverse()" data-superscript="-1">sin</button>
                 <button type="button" class="scientific-function" @click="cosInverse()" data-superscript="-1">cos</button>
                 <button type="button" class="scientific-function" @click="tanInverse()" data-superscript="-1">tan</button>
@@ -40,10 +40,10 @@
                 <button type="button" @click="UpdateDisplay('0')">0</button>
                 <button type="button" @click="UpdateDisplay('.')">.</button>
                 <button type="button" @click="signinverter()">+/-</button>
-                <button type="button" class="scientific-operation" @click="abs()">abs</button>
-                <button type="button" class="scientific-operation" @click="pi()">π</button>
+                <button type="button" id="delete" @click="deleteOneChar()"></button>
+                <button type="button" class="all-clear" value="" @click="UpdateDisplay('')">C</button>                
                 <button type="button" id="equal-sign" @click="equal()">=</button>
-        </div>
+            </div>
     </div>
     </div>
 </template>
@@ -200,7 +200,7 @@ export default {
         },
         
         exponent: function () {
-            if (this.operator.length == 1 && this.display[0] != "-" && this.display[0] != "+") {
+            if (this.operator.length == 1) {
                 return;
             }
             this.x = this.display
@@ -226,7 +226,7 @@ export default {
             this.UpdateDisplay('');
         },
 
-       inverse: function () {
+        inverse: function () {
             axios
                 .get("http://localhost:8082/inverse", {
                     params: {
@@ -249,7 +249,6 @@ export default {
                 });
         },
 
-
         signinverter: function () {
             axios
                 .get("http://localhost:8082/signinverter", {
@@ -265,7 +264,6 @@ export default {
                     console.log(error);
                 });
         },
-
 
         squareroot: function () {
             axios
@@ -290,7 +288,6 @@ export default {
                 });
         },
 
-
         square: function () {
             axios
                 .get("http://localhost:8082/square", {
@@ -306,7 +303,6 @@ export default {
                     console.log(error);
                 });
         },
-
 
         percent: function () {
             axios
@@ -324,7 +320,6 @@ export default {
                 });
         },
 
-
         add: function () {
             if (this.operator.length == 1 && this.display[0] != "-") {
                 return;
@@ -333,7 +328,6 @@ export default {
             this.operator = "+"
             this.UpdateDisplay('');
         },
-
 
         subtract: function () {
             if (this.operator.length == 1 && this.display[0] != "-") {
@@ -350,7 +344,6 @@ export default {
             }
         },
 
-
         multiply: function () {
             if (this.operator.length == 1 && this.display[0] != "-") {
                 return;
@@ -359,7 +352,6 @@ export default {
             this.operator = "*"
             this.UpdateDisplay('');
         },
-
 
         divide: function () {
             if (this.operator.length == 1 && this.display[0] != "-") {
@@ -385,8 +377,22 @@ export default {
                 });
         },
 
-        equal: function () {
+        e: function () {
+            axios
+                .get("http://localhost:8082/e", {
+                    params: {
+                    },
+                })
+                .then((response) => {
+                    this.UpdateDisplay("");
+                    this.UpdateDisplay(response.data.toString());
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
 
+        equal: function () {
             if (this.operator == "+") {
                 axios
                     .get("http://localhost:8082/add", {
@@ -460,7 +466,6 @@ export default {
                         console.log(error);
                     });
             } else if (this.operator == "x") {
-                console.log("fffffff");
                 axios
                     .get("http://localhost:8082/exponent", {
                         params: {

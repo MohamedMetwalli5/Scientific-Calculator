@@ -107,15 +107,19 @@ public class CalculatorOperations {
         return Math.PI+"";
 	}
 	
+	@RequestMapping("/e") 
+	public String e() {
+        return Math.E+"";
+	}
+	
 	@RequestMapping("/ln") 
 	public String ln(double data) {
         return Math.log(data)+"";
 	}
 	
 	@RequestMapping("/exponent") 
-	public String exponent(double base, double power) {
-		System.out.println("jppppppppppppppppppppssssssssssssssssssssssssssssssssss");
-        return "";
+	public String exponent(double x, double y) {
+        return Math.pow(x, y)+"";
 	}
 	
 	private static double factorial(double n){
@@ -127,13 +131,13 @@ public class CalculatorOperations {
 	}
 	
 	@RequestMapping("/npr") 
-	public String npr(double n, double r) {
-		return factorial(n)/factorial(n-r)+"";
+	public String npr(double x, double y) {
+		return (factorial(x)/factorial(x-y))+"";
 	}
 	
 	@RequestMapping("/ncr") 
-	public String ncr(double n, double r) {
-		return factorial(n)/(factorial(n-r)*factorial(r))+"";
+	public String ncr(double x, double y) {
+		return (factorial(x)/(factorial(x-y)*factorial(y)))+"";
 	}
 	
 }
