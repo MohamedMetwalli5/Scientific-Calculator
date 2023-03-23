@@ -1,6 +1,7 @@
 <template>
     <div id="Home-class">
         <h1 id="page-title">{{ pageTitle }}</h1>
+        <PI/>
         <div id="screen">
             <h1>{{ display }}</h1>
         </div>
@@ -44,20 +45,27 @@
                 <button type="button" class="all-clear" value="" @click="UpdateDisplay('')">C</button>                
                 <button type="button" id="equal-sign" @click="equal()">=</button>
             </div>
-    </div>
+        </div>
+    <Footer/>
     </div>
 </template>
 
 <script>
+import PI from '../components/PI.vue';
+import Footer from '../components/Footer.vue';
 import axios from 'axios';
 export default {
   name: 'Home',
+  components:{
+    PI,
+    Footer,
+  },
   data: function(){
       return {
         display: "",
         operator: "",
         pageTitle: "Scientific Calculator",
-      };
+    };
   },
     methods: {     
        
@@ -511,15 +519,13 @@ export default {
                         console.log(error);
                     });
             }
-            
             this.operator = ""
-            //alert("equal");
         },
 
-
         deleteOneChar: function () {
+            let x = this.display.substring(0, this.display.length - 1);
             this.UpdateDisplay("");
-            this.UpdateDisplay(this.display.substring(0, this.display.length - 1));
+            this.UpdateDisplay(x);
         }
 
     }
