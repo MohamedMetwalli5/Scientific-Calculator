@@ -2,7 +2,6 @@
 ![Backend](https://img.shields.io/badge/Backend-SpringBoot%20-orange.svg)
 
 # Scientific Calculator
-A web based calculator using HTML and CSS, JavaScript, and Spring Boot. 
 ## Screenshots
 ![image](https://user-images.githubusercontent.com/58489322/227320339-79f2f21c-b4ac-481b-8ff7-ada1e6cd6d70.png)
 
