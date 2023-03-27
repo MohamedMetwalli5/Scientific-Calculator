@@ -1,6 +1,6 @@
 ![Frontend](https://img.shields.io/badge/Framework-Vue.js%20-green.svg)
 ![Backend](https://img.shields.io/badge/Backend-SpringBoot%20-orange.svg)
-![License](https://img.shields.io/badge/License-MIT%20-red.svg)
+![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)
 
 # Scientific Calculator
 ## Screenshots
